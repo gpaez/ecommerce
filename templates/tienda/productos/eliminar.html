@@ -1,0 +1,12 @@
+{% extends 'tienda/base_admin.html' %}
+
+{% block contenido %}
+
+  <h2>¿Estás seguro de eliminar el producto "{{ object.nombre }}"?</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar eliminación</button>
+    <a href="{% url 'listar_productos' %}">Cancelar</a>
+  </form>
+{% endblock %}

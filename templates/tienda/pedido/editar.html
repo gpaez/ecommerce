@@ -1,0 +1,58 @@
+{% extends 'tienda/base_admin.html' %}
+
+{% block extra_css %}
+  <style>
+    .estado-Preparando { color: orange; }
+    .estado-Pendiente { color: gray; }
+    .estado-Pendiente\ de\ entrega { color: blue; }
+    .estado-Entregado { color: green; }
+  </style>
+{% endblock %}
+
+{% block contenido %}
+  <h2>Cambiar Estado del Pedido #{{ pedido.id }}</h2>
+
+  <p><strong>Cliente:</strong> {{ pedido.usuario.username }}</p>
+  <p><strong>Total:</strong> {{ pedido.total }} Gs</p>
+  <p><strong>Estado actual:</strong> {{ pedido.estado_negocio }}</p>
+
+  <h3>Detalle del pedido</h3>
+  <ul>
+    {% for item in pedido.items.all %}
+      <li>{{ item.producto.nombre }} - {{ item.cantidad }} x {{ item.precio }}</li>
+    {% endfor %}
+  </ul>
+
+  <form method="post">
+    {% csrf_token %}
+    <label for="estado_negocio">Nuevo estado:</label>
+    <select name="estado_negocio" id="estado_negocio">
+      {% for estado in estados %}
+        <option value="{{ estado.id }}" {% if estado == pedido.estado_negocio %}selected{% endif %}>
+          {{ estado.nombre }}
+        </option>
+      {% endfor %}
+    </select>
+    <br><br>
+    <button type="submit">Guardar cambio</button>
+  </form>
+
+  <h3>Historial de cambios</h3>
+  {% if pedido.historial_cambios.exists %}
+    <ul>
+      {% for cambio in historial %}
+        <li class="estado-{{ cambio.estado_nuevo }}"> 
+          {{ cambio.fecha_cambio|date:"d/m/Y H:i" }} - 
+          {{ cambio.usuario.username }} cambió de <strong>{{ cambio.estado_anterior }}</strong> a 
+          <strong>{{ cambio.estado_nuevo }}</strong>
+          {% if cambio.tiempo_entre_estados %}
+            ({{ cambio.tiempo_entre_estados }})
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Sin historial registrado.</p>
+  {% endif %}
+
+{% endblock %}

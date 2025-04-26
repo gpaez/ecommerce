@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Mi Tienda{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Guardar preferencia de modo oscuro
+    if (localStorage.getItem('modo') === 'oscuro') {
+      document.documentElement.classList.add('dark');
+    }
+
+    function toggleModoOscuro() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('modo', document.documentElement.classList.contains('dark') ? 'oscuro' : 'claro');
+    }
+  </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 dark:text-white min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <header class="bg-white dark:bg-gray-800 shadow mb-4">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold">
+        <a href="{% url 'listar_productos' %}">🛒 Mi Tienda</a>
+      </h1>
+
+      <div class="flex items-center gap-4">
+        <button onclick="toggleModoOscuro()" class="bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded">
+          🌓 Modo
+        </button>
+
+        {% if user.is_authenticated %}
+          <span>👤 {{ user.username }}</span>
+          <a href="{% url 'logout' %}" class="bg-red-500 text-white px-3 py-1 rounded">Salir</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="bg-blue-500 text-white px-3 py-1 rounded">Iniciar sesión</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="container mx-auto px-4 flex-grow">
+    {% block contenido %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 dark:bg-gray-700 text-center py-4 mt-8">
+    <p>&copy; {{ now|date:"Y" }} Mi Tienda. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>

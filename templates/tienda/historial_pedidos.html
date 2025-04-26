@@ -1,0 +1,24 @@
+<h2>Mis pedidos</h2>
+
+<!-- Botones de navegación -->
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'ver_carrito' %}" class="btn btn-primary">🛒 Ver carrito</a>
+    <a href="{% url 'inicio' %}" class="btn btn-secondary">🏠 Volver al inicio</a>
+</div>
+
+{% if object_list %}
+    <ul>
+        {% for pedido in object_list %}
+            <li>
+                <a href="{% url 'detalle_pedido' pedido.id %}">
+                    Pedido #{{ pedido.id }} - {{ pedido.creado|date:"d/m/Y H:i" }} -
+                    {{ pedido.total }} Gs
+                    {% if pedido.completado %}✅{% else %}⏳{% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tenés pedidos registrados.</p>
+{% endif %}
+

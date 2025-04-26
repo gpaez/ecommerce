@@ -1,0 +1,10 @@
+{% extends 'tienda/base_admin.html' %}
+
+{% block contenido %}
+
+    <h2>¿Eliminar "{{ object }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+    </form>
+{% endblock %}

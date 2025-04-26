@@ -1,0 +1,16 @@
+{% extends 'tienda/base_admin.html' %}
+
+{% block contenido %}
+
+    <h2>Categorías</h2>
+    <a href="{% url 'crear_categoria' %}">Nueva categoría</a>
+    <ul>
+        {% for categoria in object_list %}
+            <li>
+                {{ categoria.nombre }}
+                <a href="{% url 'editar_categoria' categoria.id %}">Editar</a>
+                <a href="{% url 'eliminar_categoria' categoria.id %}">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

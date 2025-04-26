@@ -1,0 +1,30 @@
+
+<h2>Detalle del pedido #{{ object.id }}</h2>
+<p>Fecha: {{ object.creado|date:"d/m/Y H:i" }}</p>
+<p>Estado: {% if object.completado %}✅ Completado{% else %}⏳ Pendiente{% endif %}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in object.items.all %}
+        <tr>
+            <td>{{ item.producto.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>{{ item.precio }}</td>
+            <td>{{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p><strong>Total:</strong> {{ object.total }} Gs</p>
+
+<a href="{% url 'historial_pedidos' %}">⬅ Volver al historial</a>
+

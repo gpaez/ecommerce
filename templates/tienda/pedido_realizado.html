@@ -1,0 +1,20 @@
+<h2>Pedido realizado</h2>
+<p>Número de pedido: {{ pedido.id }}</p>
+<p>Fecha: {{ pedido.creado }}</p>
+
+<ul>
+  {% for item in pedido.items.all %}
+    <li>{{ item.cantidad }} x {{ item.producto.nombre }} - {{ item.subtotal }} Gs</li>
+  {% endfor %}
+</ul>
+
+<p><strong>Total:</strong> {{ pedido.total }} Gs</p>
+
+<div class="mt-4 d-flex gap-3">
+  <a href="{% url 'historial_pedidos' %}" class="btn btn-primary">
+    🧾 Ver historial de pedidos
+  </a>
+  <a href="{% url 'inicio' %}" class="btn btn-secondary">
+    🛍️ Seguir comprando
+  </a>
+</div>

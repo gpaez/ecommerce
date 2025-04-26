@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carrito de Compras</title>
+</head>
+<body>
+    <h1>Tu Carrito</h1>
+    {% if cart %}
+    <table class="table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+          <tr>
+            <td>{{ item.producto.nombre }}</td>
+            <td>{{ item.precio }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>{{ item.subtotal }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    
+      <p><strong>Total: {{ cart.total }}</strong></p>
+    
+      <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'inicio' %}" class="btn btn-secondary">← Seguir comprando</a>
+        <a href="{% url 'realizar_pedido' %}" class="btn btn-success">🧾 Finalizar compra</a>
+      </div>
+    {% else %}
+        <p>Tu carrito está vacío.</p>
+        <a href="{% url 'inicio' %}" class="btn btn-primary">Volver a productos</a>
+    {% endif %}
+</body>
+</html>

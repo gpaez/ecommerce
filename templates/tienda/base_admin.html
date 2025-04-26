@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administración</title>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+    }
+    nav {
+      width: 220px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      height: 100vh;
+    }
+    nav a, nav form button {
+      color: white;
+      display: block;
+      margin: 10px 0;
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+    nav a:hover, nav form button:hover {
+      text-decoration: underline;
+    }
+    .contenido {
+      flex-grow: 1;
+      padding: 30px;
+    }
+  </style>
+  {% block extra_css %}
+  {% endblock %}
+</head>
+<body>
+  <nav>
+    <h2>Admin</h2>
+    <a href="{% url 'admin_dashboard' %}">🏠 Dashboard</a>
+    <a href="{% url 'listar_productos' %}">📦 Productos</a>
+    <a href="{% url 'listar_categorias' %}">🗂️ Categorías</a>
+    <a href="{% url 'admin_listado_pedidos' %}">🧾 Pedidos</a>
+    <a href="{% url 'admin:auth_user_changelist' %}">👥 Usuarios</a>
+    <hr>
+    <a href="/">🏪 Ver Tienda</a>
+
+    <!-- Logout por POST -->
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">🔓 Logout</button>
+    </form>
+  </nav>
+
+  <div class="contenido">
+    {% block contenido %}{% endblock %}
+  </div>
+  {% block extra_js %}
+  <!-- Aquí podés insertar scripts desde otras plantillas -->
+  {% endblock %}
+</body>
+</html>
