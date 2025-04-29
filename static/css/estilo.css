@@ -1,0 +1,21 @@
+/* static/css/estilo.css */
+
+/* Carrusel sencillo */
+.carousel {
+    position: relative;
+    width: 100%;
+  }
+  
+  .carousel-inner {
+    width: 300%;
+    display: flex;
+    animation: deslizar 12s infinite;
+  }
+  
+  @keyframes deslizar {
+    0% { transform: translateX(0%); }
+    33% { transform: translateX(-100%); }
+    66% { transform: translateX(-200%); }
+    100% { transform: translateX(0%); }
+  }
+  
